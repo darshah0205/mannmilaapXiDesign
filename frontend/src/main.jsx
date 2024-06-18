@@ -1,8 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
 
 // importing pages
 import Landing from "./assets/pages/landingPage/Landing";
@@ -11,7 +12,6 @@ import Register from "./assets/pages/register/Register";
 import Admin from "./assets/pages/admin/Admin";
 import Profile from "./assets/pages/profile/Profile";
 import Request from "./assets/pages/requests/Request";
-import Loader from "./assets/components/loader/Loader";
 
 const router = createBrowserRouter([
   {
@@ -48,8 +48,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Suspense fallback={<Loader />}>
+    <ChakraProvider>
       <RouterProvider router={router} />
-    </Suspense>
+    </ChakraProvider>
   </React.StrictMode>
 );
