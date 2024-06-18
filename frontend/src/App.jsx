@@ -5,10 +5,10 @@ import Navbar from "./assets/components/navbar/Navbar";
 
 function App({ children }) {
   return (
-    <>
+    <div className="w-full h-screen">
       <Navbar />
       <Outlet />
-    </>
+    </div>
   );
 }
 
