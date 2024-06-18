@@ -1,7 +1,11 @@
 import React from "react";
 
 const Request = () => {
-  return <div>Request</div>;
+  return (
+      <div className="bg-black">
+        Request
+      </div>
+  );
 };
 
 export default Request;
