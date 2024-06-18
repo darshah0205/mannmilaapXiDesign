@@ -12,7 +12,7 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
 app.use(cors());
 
-app.use("/imgs", express.static(path.join(__dirname, "imgs")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api", router);
 
 // Connecting to Database

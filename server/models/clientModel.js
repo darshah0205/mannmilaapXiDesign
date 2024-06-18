@@ -16,7 +16,7 @@ const clientSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Password is required"]
+    required: [false, "Password is required"]
   },
   email: {
     type: String,
@@ -40,11 +40,11 @@ const clientSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  groups: [{type: String}],
-  dob: {
-    type: Date,
-    required: [true, "Date of Birth is Required"]
-  },
+  groups: [{
+    name: {type: String},
+    joined: {type: Date},
+    expiry: {type: Date}
+  }],
   membershipDate: {
     type: Date,
     required: [true, "Membership date is required"]
@@ -82,6 +82,10 @@ const clientSchema = new mongoose.Schema({
   bioData: {
     type: String,
     required: false
+  },
+  isApproved: {
+    type: Boolean,
+    default: false
   }
 });
 
