@@ -41,23 +41,15 @@ const clientSchema = new mongoose.Schema({
     required: false
   },
   groups: [{
-    name: {type: String},
-    joined: {type: Date},
-    expiry: {type: Date}
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Group"
   }],
-  membershipDate: {
-    type: Date,
-    required: [true, "Membership date is required"]
-  },
+  groupRequest: [{type: String}],
   fatherName: {
     type: String
   },
   motherName: {
     type: String
-  },
-  membershipExpiryDate: {
-    type: Date,
-    required: [true, "Membership expiry date is required"]
   },
   highestLevelOfEducation: {
     type: String,
@@ -67,7 +59,7 @@ const clientSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  religon: {
+  religion: {
     type: String,
     required: [true, "Religion is required"]
   },
@@ -79,6 +71,12 @@ const clientSchema = new mongoose.Schema({
     type: String,
     required: [true, "Address is required"]
   },
+  groupsExpiry: [
+    {
+      name: String,
+      expiry: Date
+    }
+  ],
   bioData: {
     type: String,
     required: false

@@ -1,21 +1,33 @@
 const mongoose = require("mongoose");
 
+const groupMemberSchema = new mongoose.Schema({
+  member: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Client",
+    required: true
+  },
+  expiry: {
+    type: Date,
+    required: true
+  }
+});
+
 const groupSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Name is required"]
+    required: [true, "Name is required"],
+    unique: [true, "Group name should be unique"]
   },
   type: {
     type: String,
-    required: [true, "Type is required"]
+    required: false,
+    default: "PREMIUM"
   },
   photoURL: {
     type: String,
-    required: [true, "Photo URL is required"]
+    required: [false, "Photo URL is required"]
   },
-  totalMembers: [{
-    type: Number
-  }]
+  members: [groupMemberSchema]
 });
 
 const Group = mongoose.model("Group", groupSchema);
