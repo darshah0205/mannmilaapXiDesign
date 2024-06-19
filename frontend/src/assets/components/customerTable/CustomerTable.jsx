@@ -1,11 +1,13 @@
 import React from "react";
 import TableContent from "../table/Table";
+import { useParams } from "react-router-dom";
 
 const CustomerTable = () => {
+  const { group } = useParams();
   return (
-    <div className="flex-1 p-4">
-      <div className="text-4xl font-bold text-center">Content</div>
-      <div className="search-bar max-w-[500px] w-full my-4 mx-auto text-center">
+    <div className="flex-1 p-4 relative">
+      <div className="text-4xl font-bold text-center">{group}</div>
+      <div className="search-bar w-full my-4 text-right">
         <input
           type="text"
           placeholder="Search by name..."
