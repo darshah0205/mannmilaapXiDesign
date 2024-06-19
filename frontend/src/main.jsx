@@ -2,7 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 
 // importing pages
@@ -12,6 +16,7 @@ import Register from "./assets/pages/register/Register";
 import Admin from "./assets/pages/admin/Admin";
 import Profile from "./assets/pages/profile/Profile";
 import Request from "./assets/pages/requests/Request";
+import CustomerTable from "./assets/components/customerTable/CustomerTable.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +38,16 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin />,
+        children: [
+          {
+            path: "",
+            element: <Navigate to="/admin/all" />,
+          },
+          {
+            path: ":group",
+            element: <CustomerTable />,
+          },
+        ],
       },
       {
         path: "/profile",
