@@ -14,10 +14,15 @@ const upload = require("../utils/upload");
 
 router.post("/signup", upload.single('file'), controllerSignUp.createAccount);
 
+router.post("/approve-client", controllerAssignment.approveUser);
 router.post("/assign", controllerAssignment.assignGroup);
 
+router.post("/change-password", controllerUser.resetPassword);
 router.get("/users/all", controllerUser.getAllUsers);
 router.get("/groups/all", controllerGroup.getAllGroups);
+
+router.post("/login", controllerLogin.login);
+router.post("/authorize", controllerLogin.authRoute);
 
 
 

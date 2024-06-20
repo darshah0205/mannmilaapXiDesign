@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 const clientSchema = new mongoose.Schema({
   name: {
@@ -86,6 +87,11 @@ const clientSchema = new mongoose.Schema({
     default: false
   }
 });
+
+clientSchema.methods.generateAuthToken = function(){
+  const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET, {expiresIn: "5d"});
+  return token;
+}
 
 const Client = mongoose.model("Client", clientSchema);
 
