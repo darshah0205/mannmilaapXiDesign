@@ -10,6 +10,7 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const TableContent = () => {
   return (
@@ -27,20 +28,31 @@ const TableContent = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr className="cursor-pointer">
+            <Tr className="">
               <Td>Darshit Shah</Td>
               <Td>Male</Td>
               <Td isNumeric>7715919132</Td>
+              <Td className="text-blue-400 underline">
+                <Link to={"/admin/user-details/darshah"}>More Info</Link>
+              </Td>
             </Tr>
-            <Tr className="cursor-pointer">
+
+            <Tr className="">
               <Td>Pranav Patil</Td>
               <Td>Male</Td>
               <Td isNumeric>9324098270</Td>
+              <Td className="text-blue-400 underline">
+                <Link to={"/admin/user-details/darshah"}>More Info</Link>
+              </Td>
             </Tr>
-            <Tr className="cursor-pointer">
+
+            <Tr className="">
               <Td>Vishal Patil</Td>
               <Td>Male</Td>
               <Td isNumeric>9082049861</Td>
+              <Td className="text-blue-400 underline">
+                <Link to={"/admin/user-details/darshah"}>More Info</Link>
+              </Td>
             </Tr>
           </Tbody>
         </Table>

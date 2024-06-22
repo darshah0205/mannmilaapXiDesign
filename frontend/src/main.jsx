@@ -17,6 +17,7 @@ import Admin from "./assets/pages/admin/Admin";
 import Profile from "./assets/pages/profile/Profile";
 import Request from "./assets/pages/requests/Request";
 import CustomerTable from "./assets/components/customerTable/CustomerTable.jsx";
+import { UserDetails } from "./assets/pages/userDetails/UserDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
           {
             path: ":group",
             element: <CustomerTable />,
+          },
+          {
+            path: "user-details/:userID",
+            element: <UserDetails />,
           },
         ],
       },
