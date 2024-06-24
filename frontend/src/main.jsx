@@ -45,7 +45,7 @@ const router = createBrowserRouter([
             element: <Navigate to="/admin/all" />,
           },
           {
-            path: ":group",
+            path: ":groupID",
             element: <CustomerTable />,
           },
           {

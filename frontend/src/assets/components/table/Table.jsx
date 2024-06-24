@@ -12,7 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-const TableContent = () => {
+const TableContent = ({ members, groupID }) => {
+  // console.log(members);
   return (
     <div>
       <TableContainer>
@@ -28,32 +29,25 @@ const TableContent = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr className="">
-              <Td>Darshit Shah</Td>
-              <Td>Male</Td>
-              <Td isNumeric>7715919132</Td>
-              <Td className="text-blue-400 underline">
-                <Link to={"/admin/user-details/darshah"}>More Info</Link>
-              </Td>
-            </Tr>
-
-            <Tr className="">
-              <Td>Pranav Patil</Td>
-              <Td>Male</Td>
-              <Td isNumeric>9324098270</Td>
-              <Td className="text-blue-400 underline">
-                <Link to={"/admin/user-details/darshah"}>More Info</Link>
-              </Td>
-            </Tr>
-
-            <Tr className="">
-              <Td>Vishal Patil</Td>
-              <Td>Male</Td>
-              <Td isNumeric>9082049861</Td>
-              <Td className="text-blue-400 underline">
-                <Link to={"/admin/user-details/darshah"}>More Info</Link>
-              </Td>
-            </Tr>
+            {members &&
+              members.map((member) => {
+                return (
+                  <Tr className="">
+                    <Td>
+                      {groupID === "all" ? member.name : member.member.name}
+                    </Td>
+                    <Td>
+                      {groupID === "all" ? member.gender : member.member.gender}
+                    </Td>
+                    <Td isNumeric>
+                      {groupID === "all" ? member.email : member.member.email}
+                    </Td>
+                    <Td className="text-blue-400 underline">
+                      <Link to={"/admin/user-details/darshah"}>More Info</Link>
+                    </Td>
+                  </Tr>
+                );
+              })}
           </Tbody>
         </Table>
       </TableContainer>
