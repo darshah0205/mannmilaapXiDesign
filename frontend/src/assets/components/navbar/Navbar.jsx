@@ -1,29 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { options } from "./options";
 import { NavLink } from "react-router-dom";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import NormalView from "./normalView/NormalView";
+import HamburgerView from "./hamburgerView/HamburgerView";
 
 const Navbar = () => {
+  const [visible, setVisible] = useState(false);
+
   return (
-    <div className="flex items-center justify-between h-[70px] p-4">
+    <div className="flex items-center justify-between h-[70px] p-4 relative">
       <div className="font-bold text-3xl text-[var(--orange)]">MannMilaap</div>
-      <div className="flex gap-3 items-center">
-        {options.map((option) => {
-          return (
-            <NavLink
-              className={({ isActive }) =>
-                `option ${isActive ? "text-[var(--orange)]" : ""}`
-              }
-              key={option.title}
-              to={option.path}
-            >
-              {option.title}
-            </NavLink>
-          );
-        })}
-        <NavLink className="bg-[var(--orange)] p-2 rounded-md" to={"/login"}>
-          Login
-        </NavLink>
-      </div>
+      <NormalView />
+      <button
+        className="hamberuger-menu sm:hidden"
+        onClick={() => setVisible(!visible)}
+      >
+        <HamburgerIcon />
+      </button>
+      {visible && <HamburgerView setVisible={setVisible} />}
     </div>
   );
 };

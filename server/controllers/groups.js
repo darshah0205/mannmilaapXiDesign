@@ -59,5 +59,5 @@ const getAllGroups = async (req, res) => {
 };
 
 module.exports = {
-  getAllGroups,
+    getAllGroups,
 };
