@@ -15,16 +15,19 @@ import {
   FormLabel,
 } from '@chakra-ui/react'
 
+import axios from "axios";
+
+import { useToast } from '@chakra-ui/react'
+
 const Register = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef(null)
+  const toast = useToast()
   const finalRef = React.useRef(null)
 
   const [name, setName] = useState('');
   const [candidateMobile, setCandidateMobile] = useState('');
-  const [candidateMobileCode, setCandidateMobileCode] = useState('');
   const [whatsappNumber, setWhatsappNumber] = useState('');
-  const [whatsappNumberCode, setWhatsappNumberCode] = useState('');
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [gender, setGender] = useState('');
@@ -34,13 +37,9 @@ const Register = () => {
   const [occupation, setOccupation] = useState('');
   const [religion, setReligion] = useState('');
   const [groups, setGroups] = useState([]);
-  const [groupRequest, setGroupRequest] = useState([]);
   const [caste, setCaste] = useState('');
   const [address, setAddress] = useState('');
-  const [isApproved, setIsApproved] = useState(false);
   const [biodata, setBiodata] = useState('');
-  const [groupsExpiry, setGroupsExpiry] = useState([]);
-
   const [activeStep, setActiveStep] = useState(0);
 
   const nextStep = () => {
@@ -54,13 +53,6 @@ const Register = () => {
   const handleGroupChange = (value) => {
     setGroups(value);
   }
-
-  const countryCodes = [
-    { code: '+1', country: 'USA' },
-    { code: '+91', country: 'India' },
-    { code: '+44', country: 'UK' },
-    // Add more country codes as needed
-  ];
 
   const groupOptions = [
     'Mann Milaap Digital Group',
@@ -104,11 +96,7 @@ const Register = () => {
       label2: 'Mobile Number',
       value2: candidateMobile,
       onChange2: (e) => setCandidateMobile(e.target.value),
-      extra: (
-        <Select value={candidateMobileCode} onChange={(e) => setCandidateMobileCode(e.target.value)}>
-          {countryCodes.map(code => <option key={code.code} value={code.code}>{code.country} ({code.code})</option>)}
-        </Select>
-      )
+      two_labels:'Yes'
     },
     {
       label1: 'WhatsApp Number',
@@ -117,11 +105,8 @@ const Register = () => {
       label2: 'Email',
       value2: email,
       onChange2: (e) => setEmail(e.target.value),
-      extra: (
-        <Select value={whatsappNumberCode} onChange={(e) => setWhatsappNumberCode(e.target.value)}>
-          {countryCodes.map(code => <option key={code.code} value={code.code}>{code.country} ({code.code})</option>)}
-        </Select>
-      )
+      two_labels:'Yes'
+
     },
     {
       label1: 'Birthdate',
@@ -130,6 +115,7 @@ const Register = () => {
       label2: 'Gender',
       value2: gender,
       onChange2: (e) => setGender(e.target.value),
+      two_labels:'Yes'
     },
     {
       label1: 'Father Name',
@@ -138,6 +124,7 @@ const Register = () => {
       label2: 'Mother Name',
       value2: motherName,
       onChange2: (e) => setMotherName(e.target.value),
+      two_labels:'Yes'
     },
     {
       label1: 'Highest Level Of Education',
@@ -146,6 +133,7 @@ const Register = () => {
       label2: 'Occupation',
       value2: occupation,
       onChange2: (e) => setOccupation(e.target.value),
+      two_labels:'Yes'
     },
     {
       label1: 'Religion',
@@ -154,6 +142,7 @@ const Register = () => {
       label2: 'Caste',
       value2: caste,
       onChange2: (e) => setCaste(e.target.value),
+      two_labels:'Yes'
     },
     {
       label1: 'Address',
@@ -162,6 +151,7 @@ const Register = () => {
       label2: 'Biodata',
       value2: biodata,
       onChange2: (e) => setBiodata(e.target.value),
+      two_labels:'Yes'
     },
     {
       label1: 'Select Groups',
@@ -169,7 +159,7 @@ const Register = () => {
       onChange1: handleGroupChange,
       extra: (
         <CheckboxGroup value={groups} onChange={handleGroupChange}>
-          <Stack>
+          <Stack mt={4} mb={4}>
             {groupOptions.map(group => (
               <Checkbox key={group} value={group}>{group}</Checkbox>
             ))}
@@ -178,6 +168,52 @@ const Register = () => {
       )
     }
   ];
+
+  const finishRegistration = () => {
+    const registrationData = {
+      name: name,
+      candidateMobile: candidateMobile,
+      whatsappNumber: whatsappNumber,
+      email: email,
+      birthdate: birthdate,
+      gender: gender,
+      fatherName: fatherName,
+      motherName: motherName,
+      highestLevelOfEducation: highestLevelOfEducation,
+      occupation: occupation,
+      religion: religion,
+      groups: groups,
+      caste: caste,
+      address: address,
+    };
+
+    console.log("Registration Data: ", JSON.stringify(registrationData, null, 2));
+
+    axios.post('/api/registration', registrationData)
+    .then(response => {
+      // console.log('Registration successful:', response.data);
+      toast({
+        title: 'Registration Successful.',
+        description: "You will get notified when the request is approved",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      })
+    })
+    .catch(error => {
+      console.error('There was an error registering:', error);
+      toast({
+        title: 'Something Went wrong',
+        description: "Please the input data or try again",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+    });
+
+    onClose();
+  };
+
 
   return (
     <div>
@@ -204,10 +240,10 @@ const Register = () => {
                   {steps[activeStep].extra && steps[activeStep].extra}
                 </FormControl>
 
-                <FormControl mt={4}>
+                {steps[activeStep].two_labels && <FormControl mt={4}>
                   <FormLabel>{steps[activeStep].label2}</FormLabel>
                   <Input value={steps[activeStep].value2} onChange={steps[activeStep].onChange2} placeholder={steps[activeStep].label2} />
-                </FormControl>
+                </FormControl>}
               </>
             )}
           </ModalBody>
@@ -219,7 +255,7 @@ const Register = () => {
                 Next
               </Button>
             ) : (
-              <Button colorScheme='blue' onClick={onClose}>
+              <Button colorScheme='blue' onClick={finishRegistration}>
                 Finish
               </Button>
             )}
