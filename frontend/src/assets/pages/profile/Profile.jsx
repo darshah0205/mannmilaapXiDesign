@@ -22,7 +22,10 @@ const Profile = () => {
   useEffect(() => {
     getDetails();
   }, []);
-  return <div>{JSON.stringify(userInfo)}</div>;
+  return <div>
+  {JSON.stringify(userInfo)}
+     
+  </div>;
 };
 
 export default Profile;
