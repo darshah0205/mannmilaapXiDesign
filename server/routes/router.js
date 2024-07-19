@@ -13,9 +13,12 @@ const upload = require("../utils/upload");
 // router.get("/callback", controllerLogin.callbackCheck);
 
 router.post("/signup", upload.single('file'), controllerSignUp.createAccount);
+router.post("/update-biodata", upload.single('file'), controllerUser.updateBioData);
 
 router.post("/approve-client", controllerAssignment.approveUser);
 router.post("/assign", controllerAssignment.assignGroup);
+router.post("/update-profile", controllerUser.updateProfile);
+
 
 router.post("/change-password", controllerUser.resetPassword);
 router.get("/users/all", controllerUser.getAllUsers);
