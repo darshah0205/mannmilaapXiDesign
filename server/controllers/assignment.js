@@ -10,7 +10,9 @@ const approveUser = async (req, res) => {
     // console.log(details);
     const user = await Client.findOne({ email: details.email });
     if (!user) {
-      return res.status(200).json({ success: true, msg: "No Such User Exist !" });
+      return res
+        .status(200)
+        .json({ success: true, msg: "No Such User Exist !" });
     }
     // Hashing Password
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
@@ -20,7 +22,6 @@ const approveUser = async (req, res) => {
     await user.save();
 
     return res.status(200).json({ success: true, msg: "Client Approved" });
-
   } catch (error) {
     console.error("Error in handling login request:", error);
     return res.status(500).json({ success: false, msg: "Some Error Occurred" });
@@ -28,8 +29,8 @@ const approveUser = async (req, res) => {
 };
 
 const assignGroup = async (req, res) => {
-
   try {
+    console.log(req.body);
 
     var groupName = req.body.groupName;
     // var groupName = "Group 2";
@@ -37,7 +38,9 @@ const assignGroup = async (req, res) => {
     var user = await Client.findById(userid);
 
     if (!user) {
-      return res.status(200).json({ success: true, msg: "No Such User Exist !" });
+      return res
+        .status(200)
+        .json({ success: true, msg: "No Such User Exist !" });
     }
 
     // const wasPresent = user.groupRequest.includes(groupName);
@@ -47,37 +50,44 @@ const assignGroup = async (req, res) => {
 
     const group = await Group.findOne({ name: groupName });
     if (!group) {
-      return res.status(200).json({ success: true, msg: "No such Group in Existance !" });
+      return res
+        .status(200)
+        .json({ success: true, msg: "No such Group in Existance !" });
     }
 
-    user.groupRequest = user.groupRequest.filter((field) => field !== groupName);
+    user.groupRequest = user.groupRequest.filter(
+      (field) => field !== groupName
+    );
     user.groups.push(group._id);
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 90);
 
     user.groupsExpiry.push({
       name: group.name,
-      expiry: expiryDate
+      expiry: expiryDate,
     });
 
     group.members.push({
       member: user._id,
-      expiry: expiryDate
+      expiry: expiryDate,
     });
 
     user.save();
     group.save();
     // const new_id = new mongoose.Types.ObjectId("66728fdf1a340c9e2530bbb2");
-    return res.status(200).json({ success: true, msg: `Successfully assigned ${group.name} to ${user.name} !` });
-
+    return res
+      .status(200)
+      .json({
+        success: true,
+        msg: `Successfully assigned ${group.name} to ${user.name} !`,
+      });
   } catch (error) {
     console.error("Error in handling login request:", error);
     return res.status(500).json({ success: false, msg: "Some Error Occurred" });
   }
 };
 
-
 module.exports = {
   assignGroup,
-  approveUser
+  approveUser,
 };

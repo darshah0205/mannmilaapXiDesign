@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { url } from "../../../utils/url";
 import { getCurrentUserToken } from "../../../utils/userDetails";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -71,6 +72,9 @@ const Login = () => {
         >
           Log in
         </button>
+        <h1>
+          New user? <Link to="/register">Register</Link>
+        </h1>
       </form>
     </div>
   );

@@ -34,16 +34,30 @@ const TableContent = ({ members, groupID }) => {
                 return (
                   <Tr className="">
                     <Td>
-                      {groupID === "all" ? member.name : member.member.name}
+                      {groupID === "all" || groupID === "Requests"
+                        ? member.name
+                        : member.member.name}
                     </Td>
                     <Td>
-                      {groupID === "all" ? member.gender : member.member.gender}
+                      {groupID === "all" || groupID === "Requests"
+                        ? member.gender
+                        : member.member.gender}
                     </Td>
                     <Td isNumeric>
-                      {groupID === "all" ? member.email : member.member.email}
+                      {groupID === "all" || groupID === "Requests"
+                        ? member.email
+                        : member.member.email}
                     </Td>
                     <Td className="text-blue-400 underline">
-                      <Link to={"/admin/user-details/darshah"}>More Info</Link>
+                      <Link
+                        to={`/admin/user-details/${
+                          groupID === "all" || groupID === "Requests"
+                            ? member.email
+                            : member.member.email
+                        }`}
+                      >
+                        More Info
+                      </Link>
                     </Td>
                   </Tr>
                 );

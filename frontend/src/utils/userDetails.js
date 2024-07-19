@@ -21,6 +21,25 @@ export const getAllUsers = async () => {
   }
 };
 
+export const getAllUsersApproved = async () => {
+  try {
+    const user = await axios.get(url + `/users/all?isApproved=true`);
+    return user;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+};
+export const getAllUsersUnapproved = async () => {
+  try {
+    const user = await axios.get(url + `/users/all?isApproved=false`);
+    return user;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+};
+
 export const getCurrentUserToken = async () => {
   if (localStorage.getItem("mannMilaapUserToken")) {
     const returnedToken = localStorage.getItem("mannMilaapUserToken");
