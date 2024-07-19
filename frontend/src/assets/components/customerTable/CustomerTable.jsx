@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TableContent from "../table/Table";
 import { useParams } from "react-router-dom";
 import { getGroupMembersByID } from "../../../utils/groups";
-import { getAllUsers } from "../../../utils/userDetails";
+import { getAllUsers, getAllUsersApproved } from "../../../utils/userDetails";
 
 const CustomerTable = () => {
   const [members, setMembers] = useState(false);
@@ -13,7 +13,7 @@ const CustomerTable = () => {
       // Make this function async
       try {
         if (groupID === "all") {
-          const members = await getAllUsers(groupID);
+          const members = await getAllUsersApproved(groupID);
           // console.log(members);
           setGroupName("All");
           setMembers(members.data.data);

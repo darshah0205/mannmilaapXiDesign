@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const clientSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Name is required"]
+    required: [true, "Name is required"],
   },
   candidateMobile: {
     type: String,
@@ -17,81 +17,85 @@ const clientSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [false, "Password is required"]
+    required: [false, "Password is required"],
   },
   email: {
     type: String,
     required: [true, "Email is required"],
-    unique: true
+    unique: true,
   },
   birthdate: {
-    type: Date,
-    required: [true, "Birthdate is required"]
+    type: String,
+    required: [true, "Birthdate is required"],
   },
   gender: {
     type: String,
-    enum: ['Male', 'Female', 'Other'],
-    required: [true, "Gender is required"]
+    enum: ["Male", "Female", "Other"],
+    required: [true, "Gender is required"],
   },
   referencePersonName: {
     type: String,
-    required: false
+    required: false,
   },
   referencePersonContact: {
     type: String,
-    required: false
+    required: false,
   },
-  groups: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Group"
-  }],
-  groupRequest: [{type: String}],
+  groups: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Group",
+    },
+  ],
+  groupRequest: [{ type: String }],
   fatherName: {
-    type: String
+    type: String,
   },
   motherName: {
-    type: String
+    type: String,
   },
   highestLevelOfEducation: {
     type: String,
-    required: true
+    required: true,
   },
   occupation: {
     type: String,
-    required: true
+    required: true,
   },
   religion: {
     type: String,
-    required: [true, "Religion is required"]
+    required: [true, "Religion is required"],
   },
   caste: {
     type: String,
-    required: [true, "Caste is required"]
+    required: [true, "Caste is required"],
   },
   address: {
     type: String,
-    required: [true, "Address is required"]
+    required: [true, "Address is required"],
   },
   groupsExpiry: [
     {
       name: String,
-      expiry: Date
-    }
+      expiry: Date,
+    },
   ],
   bioData: {
     type: String,
-    required: false
+    required: false,
   },
   isApproved: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
-clientSchema.methods.generateAuthToken = function(){
-  const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET, {expiresIn: "5d"});
+clientSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: "5d",
+  });
   return token;
-}
+};
 
 const Client = mongoose.model("Client", clientSchema);
 
