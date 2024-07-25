@@ -2,27 +2,26 @@ import React, { useEffect, useState } from "react";
 import TableContent from "../table/Table";
 import { useParams } from "react-router-dom";
 import { getGroupMembersByID } from "../../../utils/groups";
-import { getAllUsers, getAllUsersApproved } from "../../../utils/userDetails";
+import { getAllUsersApproved } from "../../../utils/userDetails";
 
 const CustomerTable = () => {
-  const [members, setMembers] = useState(false);
-  const [groupName, setGroupName] = useState(false);
+  const [members, setMembers] = useState([]);
+  const [filteredMembers, setFilteredMembers] = useState([]);
+  const [groupName, setGroupName] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const { groupID } = useParams();
+
   const getGroupMembers = async () => {
     setTimeout(async () => {
-      // Make this function async
       try {
         if (groupID === "all") {
-          const members = await getAllUsersApproved(groupID);
-          // console.log(members);
+          const membersResponse = await getAllUsersApproved(groupID);
           setGroupName("All");
-          setMembers(members.data.data);
+          setMembers(membersResponse.data.data);
         } else {
-          setMembers(null);
-          const members = await getGroupMembersByID(groupID);
-          // console.log(members);
-          setGroupName(members.data.data[0].name);
-          setMembers(members.data.data[0].members);
+          const membersResponse = await getGroupMembersByID(groupID);
+          setGroupName(membersResponse.data.data[0].name);
+          setMembers(membersResponse.data.data[0].members);
         }
       } catch (error) {
         console.log(error);
@@ -31,9 +30,25 @@ const CustomerTable = () => {
   };
 
   useEffect(() => {
-    // console.log("Use effect");
     getGroupMembers();
   }, [groupID]);
+
+  useEffect(() => {
+    // Filter members based on search input
+    if (searchInput) {
+      setFilteredMembers(
+        members.filter((member) =>
+          member.name.toLowerCase().includes(searchInput.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredMembers(members);
+    }
+  }, [searchInput, members]);
+
+  const handleSearchChange = (e) => {
+    setSearchInput(e.target.value);
+  };
 
   return (
     <div className="flex-1 p-4 relative">
@@ -42,10 +57,16 @@ const CustomerTable = () => {
         <input
           type="text"
           placeholder="Search by name..."
+          value={searchInput}
+          onChange={handleSearchChange}
           className="p-2 text-xl border-2 border-solid border-[var(--brown)] rounded-xl"
         />
       </div>
-      {members && <TableContent members={members} groupID={groupID} />}
+      {filteredMembers.length > 0 ? (
+        <TableContent members={filteredMembers} groupID={groupID} />
+      ) : (
+        <p className="text-center text-xl">No members found.</p>
+      )}
     </div>
   );
 };

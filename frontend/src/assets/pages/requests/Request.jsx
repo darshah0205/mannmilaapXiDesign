@@ -17,7 +17,7 @@ const Request = () => {
     getUnapprovedUser();
   }, []);
 
-  if (enterPassword && enterPassword === password) {
+  if (sessionStorage.getItem("adminPassword") === password) {
     return <TableContent members={members} groupID="Requests" />;
   } else {
     return (

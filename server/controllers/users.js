@@ -161,10 +161,15 @@ const resetPassword = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const details = req.body;
-    const user = await Client.findOne({ email: details.email });
+    const user = await Client.findOneAndUpdate(
+      { email: details.email },
+      details
+    );
 
     if (!user) {
-      return res.status(200).json({ success: true, msg: "No Such User Exist!" });
+      return res
+        .status(200)
+        .json({ success: true, msg: "No Such User Exist!" });
     }
 
     // Update user object with fields from details
@@ -177,7 +182,6 @@ const updateProfile = async (req, res) => {
     await user.save();
 
     return res.status(200).json({ success: true, msg: "Profile Updated" });
-
   } catch (error) {
     console.error("Error in handling update profile request:", error);
     return res.status(500).json({ success: false, msg: "Some Error Occurred" });
@@ -187,8 +191,8 @@ const updateProfile = async (req, res) => {
 const updateBioData = async (req, res) => {
   try {
     const details = req.body;
+    console.log(details);
     return res.status(200).json({ success: true, msg: "Bio-Data Updated" });
-
   } catch (error) {
     console.error("Error in handling update profile request:", error);
     return res.status(500).json({ success: false, msg: "Some Error Occurred" });

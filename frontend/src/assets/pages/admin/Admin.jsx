@@ -7,7 +7,15 @@ const Admin = () => {
   const password = "password";
   const [enterPassword, setEnterPassword] = useState(false);
 
-  if (enterPassword && enterPassword === password) {
+  const handleAdminPassword = () => {
+    console.log(enterPassword);
+    if (enterPassword === password) {
+      sessionStorage.setItem("adminPassword", enterPassword);
+      window.location.reload();
+    }
+  };
+
+  if (sessionStorage.getItem("adminPassword") === password) {
     return (
       <div className="flex gap-3 p-2 h-[calc(100vh-70px)] overflow-y-hidden overflow-x-auto">
         <AdminSidebar />
@@ -16,10 +24,13 @@ const Admin = () => {
     );
   } else {
     return (
-      <input
-        placeholder="Enter password"
-        onChange={(e) => setEnterPassword(e.target.value)}
-      />
+      <div>
+        <input
+          placeholder="Enter password"
+          onChange={(e) => setEnterPassword(e.target.value)}
+        />
+        <button onClick={handleAdminPassword}>Submit</button>
+      </div>
     );
   }
 };

@@ -1,11 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { getCurrentUserDetails, logOut } from "../../../utils/userDetails";
+import axios from "axios";
+import {
+  getCurrentUserDetails,
+  logOut,
+  updateUserProfile,
+} from "../../../utils/userDetails";
 import { handleDownload } from "../../../utils/download";
+import { url } from "../../../utils/url";
 
 const Profile = () => {
   const [user, setUser] = useState(null); // Start with null instead of false
   const [editIsOn, setEditIsOn] = useState(false);
+  const [file, setFile] = useState(null);
 
+  const handleFileChange = async (e) => {
+    e.preventDefault();
+    console.log("handle change");
+    try {
+      const formDataBioData = new FormData();
+      if (!file) {
+        alert("Select a file first");
+        return;
+      }
+
+      formDataBioData.append("file", file);
+      formDataBioData.append("email", user.email);
+      const uploadBioData = await axios.post(
+        url + "/update-biodata",
+        formDataBioData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            mail: user.email,
+          },
+        }
+      );
+
+      alert("Uploaded successfully");
+    } catch (error) {
+      console.log(error);
+      alert("Error Uploading");
+    }
+  };
   const getDetails = async () => {
     try {
       const response = await getCurrentUserDetails();
@@ -30,9 +66,10 @@ const Profile = () => {
     setEditIsOn(!editIsOn);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Handle form submission, e.g., send data to server
     console.log("Updated user details:", user);
+    await updateUserProfile(user);
     setEditIsOn(false);
   };
 
@@ -88,8 +125,7 @@ const Profile = () => {
             type="email"
             name="email"
             value={user.email}
-            onChange={handleChange}
-            readOnly={!editIsOn}
+            readOnly={true}
             className={`w-full px-3 py-2 border ${
               editIsOn ? "border-blue-500" : "border-gray-300"
             } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -101,7 +137,7 @@ const Profile = () => {
             Birthdate:
           </label>
           <input
-            type="date"
+            type="string"
             name="birthdate"
             value={user.birthdate}
             onChange={handleChange}
@@ -245,7 +281,22 @@ const Profile = () => {
             >
               Download BioData
             </button>
-            <input type="file" />
+            <input
+              type="file"
+              onChange={(e) => {
+                try {
+                  setFile(e.target.files[0]);
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            />
+            <button
+              className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 m-4"
+              onClick={(e) => handleFileChange(e)}
+            >
+              Upload new BioData
+            </button>
           </div>
         )}
         <div className="flex justify-between items-center">

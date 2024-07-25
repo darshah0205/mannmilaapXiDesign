@@ -100,9 +100,9 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Clicked handleSubmit");
+    // console.log("Clicked handleSubmit");
     if (!biodata) return;
-    console.log("Clicked handleSubmit2");
+    // console.log("Clicked handleSubmit2");
 
     const formData = new FormData();
     formData.append("file", biodata);
@@ -122,7 +122,7 @@ const Register = () => {
     groups.forEach((group, index) => {
       formData.append(`groupRequest[${index}]`, group);
     });
-    console.log("Clicked handleSubmit3");
+    // console.log("Clicked handleSubmit3");
 
     try {
       const response = await axios.post(
