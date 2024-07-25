@@ -25,9 +25,12 @@ const Login = () => {
         password: password,
       });
       console.log(response.data);
-      if (response.status === 200) {
+      if (response.data.success === true) {
         localStorage.setItem("mannMilaapUserToken", response.data.token);
         window.location.href = "/";
+      } else {
+        alert(response.data.msg);
+        setPassword("");
       }
       // Handle success (e.g., redirect to another page, show a success message, etc.)
     } catch (error) {
