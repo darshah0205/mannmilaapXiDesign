@@ -4,12 +4,12 @@ import { url } from "../../../utils/url";
 import { getCurrentUserToken } from "../../../utils/userDetails";
 import { Link } from "react-router-dom";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
+const ChangePassword = () => {
+  const [newPassword, setNewPassword] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleNewPasswordChange = (e) => {
+    setNewPassword(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -19,10 +19,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(url + "/login");
+      console.log(url + "/Change-password");
       const response = await axios.post(url + `/login`, {
         email: email,
-        password: password,
+        newPassword,
       });
       console.log(response.data);
       if (response.data.success === true) {
@@ -53,35 +53,32 @@ const Login = () => {
         className="flex flex-col gap-4 items-center justify-center h-[calc(100vh-70px)]"
       >
         <h1 className="text-4xl font-bold text-center text-[var(--orange)]">
-          Login Page
+          Change Password
         </h1>
+
         <input
           className="p-2 border-2 border-solid border-[var(--orange)] rounded-md "
-          type="text"
-          placeholder="Enter your Email Id"
-          value={email}
-          onChange={handleEmailChange}
+          type="password"
+          placeholder="Enter current password"
+          value={password}
+          onChange={handlePasswordChange}
         />
         <input
           className="p-2 border-2 border-solid border-[var(--orange)] rounded-md "
           type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={handlePasswordChange}
+          placeholder="Enter new password"
+          value={newPassword}
+          onChange={handleNewPasswordChange}
         />
-        <Link className="text-[var(--orange)]">Change password</Link>
         <button
           type="submit"
           className="border-solid border-2 border-[var(--orange)] rounded-md hover:bg-[var(--orange)] px-4 py-2 font-bold hover:text-white"
         >
-          Log in
+          Change password
         </button>
-        <h1>
-          New user? <Link to="/register" className="underline text-[var(--orange)] font-bold">Register</Link>
-        </h1>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default ChangePassword;

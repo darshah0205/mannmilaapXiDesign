@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 
 const TableContent = ({ members, groupID }) => {
+  const today = new Date();
   // console.log(members);
   return (
     <div>
@@ -22,7 +23,7 @@ const TableContent = ({ members, groupID }) => {
           <Thead>
             <Tr>
               <Th fontSize={16}>Name</Th>
-              <Th fontSize={16}>Gender</Th>
+              <Th fontSize={16}>{groupID == "all" ? "Gender" : "Expiry"}</Th>
               <Th fontSize={16} isNumeric>
                 Contact
               </Th>
@@ -31,8 +32,18 @@ const TableContent = ({ members, groupID }) => {
           <Tbody>
             {members &&
               members.map((member) => {
+                const expiryDate = new Date(member.expiry); // Convert expiry to Date object
+                const daysUntilExpiry = Math.floor(
+                  (expiryDate - today) / (1000 * 60 * 60 * 24)
+                ); // Calculate days until expiry
+
+                const isExpiringSoon = daysUntilExpiry <= 10; // Check if expiry is within 10 days
+                console.log(member.expiry);
                 return (
-                  <Tr className="">
+                  <Tr
+                    key={member.email}
+                    className={isExpiringSoon ? "bg-red-500" : ""}
+                  >
                     <Td>
                       {groupID === "all" || groupID === "Requests"
                         ? member.name
@@ -41,7 +52,7 @@ const TableContent = ({ members, groupID }) => {
                     <Td>
                       {groupID === "all" || groupID === "Requests"
                         ? member.gender
-                        : member.member.gender}
+                        : member.expiry.slice(0,10)}
                     </Td>
                     <Td isNumeric>
                       {groupID === "all" || groupID === "Requests"

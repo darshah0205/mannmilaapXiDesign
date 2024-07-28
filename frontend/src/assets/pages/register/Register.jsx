@@ -290,9 +290,9 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="flex justify-center items-center h-[calc(100vh-70px)]">
       <Button colorScheme="orange" onClick={onOpen}>
-        Register
+        Fill Up Registeration Form
       </Button>
 
       <Modal
