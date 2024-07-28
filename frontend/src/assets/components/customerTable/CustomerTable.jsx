@@ -35,10 +35,13 @@ const CustomerTable = () => {
 
   useEffect(() => {
     // Filter members based on search input
-    if (searchInput) {
+    if (searchInput && members.length > 0) {
+      console.log(members)
+      console.log(searchInput)
+      // Check if members has data
       setFilteredMembers(
         members.filter((member) =>
-          member.name.toLowerCase().includes(searchInput.toLowerCase())
+          groupID === 'all' ?member.name.toLowerCase().includes(searchInput.toLowerCase()) :member.member.name.toLowerCase().includes(searchInput.toLowerCase())
         )
       );
     } else {

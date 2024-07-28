@@ -38,7 +38,7 @@ const TableContent = ({ members, groupID }) => {
                 ); // Calculate days until expiry
 
                 const isExpiringSoon = daysUntilExpiry <= 10; // Check if expiry is within 10 days
-                console.log(member.expiry);
+                // console.log(member.expiry);
                 return (
                   <Tr
                     key={member.email}
