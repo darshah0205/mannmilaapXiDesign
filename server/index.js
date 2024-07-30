@@ -7,6 +7,7 @@ const path = require("path");
 const router = require("./routes/router");
 const connectDB = require("./database/db");
 
+
 // Initiall Set Up
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
