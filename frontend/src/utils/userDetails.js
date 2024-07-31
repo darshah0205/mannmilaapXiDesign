@@ -21,6 +21,25 @@ export const getAllUsers = async () => {
   }
 };
 
+export const getAllUsersApproved = async () => {
+  try {
+    const user = await axios.get(url + `/users/all?isApproved=true`);
+    return user;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+};
+export const getAllUsersUnapproved = async () => {
+  try {
+    const user = await axios.get(url + `/users/all?isApproved=false`);
+    return user;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+};
+
 export const getCurrentUserToken = async () => {
   if (localStorage.getItem("mannMilaapUserToken")) {
     const returnedToken = localStorage.getItem("mannMilaapUserToken");
@@ -35,7 +54,7 @@ export const getCurrentUserDetails = async () => {
       const user = await axios.post(url + `/authorize`, {
         token: userToken,
       });
-      console.log(user);
+      // console.log(user);
       return user;
     } else return false;
   } catch (error) {
@@ -47,3 +66,27 @@ export const getCurrentUserDetails = async () => {
 export const logOut = async () => {
   localStorage.removeItem("mannMilaapUserToken");
 };
+
+export const updateUserProfile = async (data) => {
+  try {
+    console.log(data);
+    const updateResponse = await axios.post(url + "/update-profile", data);
+    if (updateResponse) {
+      console.log(updateResponse);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// export const updateBioData = async () => {
+//   try {
+//     console.log();
+//     const updateResponse = await axios.post(url + "/update-biodata");
+//     if (updateResponse) {
+//       console.log(updateResponse);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
