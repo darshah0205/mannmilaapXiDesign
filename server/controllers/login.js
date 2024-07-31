@@ -28,8 +28,8 @@ const login = async (req, res) => {
       return res.status(200).json({ success: false, msg: "User not Approved" });
     }
 
-    console.log(password);
-    console.log(user.password);
+    // console.log(password);
+    // console.log(user.password);
     const validPassword = await bcrypt.compare(password, user.password);
     if (validPassword) {
       const token = user.generateAuthToken();
