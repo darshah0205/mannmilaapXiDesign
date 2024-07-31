@@ -32,7 +32,10 @@ const TableContent = ({ members, groupID }) => {
           <Tbody>
             {members &&
               members.map((member) => {
-                const expiryDate = new Date(member.expiry); // Convert expiry to Date object
+                // console.log(member)
+                const groupMembership =member.groupsExpiry?.length
+                const expiryDate = new Date(member.expiry);
+                console.log(expiryDate) // Convert expiry to Date object
                 const daysUntilExpiry = Math.floor(
                   (expiryDate - today) / (1000 * 60 * 60 * 24)
                 ); // Calculate days until expiry
@@ -44,19 +47,19 @@ const TableContent = ({ members, groupID }) => {
                     key={member.email}
                     
                   >
-                    <Td style={{backgroundColor: isExpiringSoon ? "#fa8072" : ""}}>
+                    <Td style={{backgroundColor: isExpiringSoon || (groupMembership!==null &&groupMembership===0) ? "#fa8072" : ""}}>
                     
                         {groupID === "all" || groupID === "Requests"
                           ? member.name
                           : member.member.name}
                   
                     </Td>
-                    <Td style={{backgroundColor: isExpiringSoon ? "#fa8072" : ""}}>
+                    <Td style={{backgroundColor: isExpiringSoon || (groupMembership!==null &&groupMembership===0) ? "#fa8072" : ""}}>
                       {groupID === "all" || groupID === "Requests"
                         ? member.gender
                         : member.expiry.slice(0,10)}
                     </Td>
-                    <Td isNumeric style={{backgroundColor: isExpiringSoon ? "#fa8072" : ""}}>
+                    <Td isNumeric style={{backgroundColor: isExpiringSoon || (groupMembership!==null &&groupMembership===0) ? "#fa8072" : ""}}>
                       {groupID === "all" || groupID === "Requests"
                         ? member.email
                         : member.member.email}
