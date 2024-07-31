@@ -32,9 +32,9 @@ const Login = () => {
         alert(response.data.msg);
         setPassword("");
       }
-      // Handle success (e.g., redirect to another page, show a success message, etc.)
     } catch (error) {
       console.error("There was an error logging in!", error);
+      alert("Wrong Credentials")
       localStorage.removeItem("mannMilaapUserToken");
       // Handle error (e.g., show an error message)
     }
@@ -69,7 +69,7 @@ const Login = () => {
           value={password}
           onChange={handlePasswordChange}
         />
-        <Link className="text-[var(--orange)]">Change password</Link>
+        <Link to={"/change-password"} className="text-[var(--orange)]">Change password</Link>
         <button
           type="submit"
           className="border-solid border-2 border-[var(--orange)] rounded-md hover:bg-[var(--orange)] px-4 py-2 font-bold hover:text-white"

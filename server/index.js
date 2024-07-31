@@ -6,6 +6,7 @@ const cors = require("cors");
 const path = require("path");
 const router = require("./routes/router");
 const connectDB = require("./database/db");
+const cronJobs = require("./controllers/Membership");
 
 
 // Initiall Set Up
@@ -18,6 +19,8 @@ app.use("/api", router);
 
 // Connecting to Database
 connectDB();
+
+cronJobs;
 
 // Starting the serveron Localhost
 const PORT = process.env.PORT || 5000;

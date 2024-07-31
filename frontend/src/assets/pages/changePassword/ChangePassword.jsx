@@ -7,6 +7,11 @@ import { Link } from "react-router-dom";
 const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
@@ -20,8 +25,9 @@ const ChangePassword = () => {
     e.preventDefault();
     try {
       console.log(url + "/Change-password");
-      const response = await axios.post(url + `/login`, {
-        email: email,
+      const response = await axios.post(url + `/change-password`, {
+        email,
+        password,
         newPassword,
       });
       console.log(response.data);
@@ -55,7 +61,13 @@ const ChangePassword = () => {
         <h1 className="text-4xl font-bold text-center text-[var(--orange)]">
           Change Password
         </h1>
-
+        <input
+          className="p-2 border-2 border-solid border-[var(--orange)] rounded-md "
+          type="email"
+          placeholder="Enter E-mail Address"
+          value={email}
+          onChange={handleEmailChange}
+        />
         <input
           className="p-2 border-2 border-solid border-[var(--orange)] rounded-md "
           type="password"

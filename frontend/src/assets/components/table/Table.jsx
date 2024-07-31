@@ -42,24 +42,26 @@ const TableContent = ({ members, groupID }) => {
                 return (
                   <Tr
                     key={member.email}
-                    className={isExpiringSoon ? "bg-red-500" : ""}
+                    
                   >
-                    <Td>
-                      {groupID === "all" || groupID === "Requests"
-                        ? member.name
-                        : member.member.name}
+                    <Td style={{backgroundColor: isExpiringSoon ? "#fa8072" : ""}}>
+                    
+                        {groupID === "all" || groupID === "Requests"
+                          ? member.name
+                          : member.member.name}
+                  
                     </Td>
-                    <Td>
+                    <Td style={{backgroundColor: isExpiringSoon ? "#fa8072" : ""}}>
                       {groupID === "all" || groupID === "Requests"
                         ? member.gender
                         : member.expiry.slice(0,10)}
                     </Td>
-                    <Td isNumeric>
+                    <Td isNumeric style={{backgroundColor: isExpiringSoon ? "#fa8072" : ""}}>
                       {groupID === "all" || groupID === "Requests"
                         ? member.email
                         : member.member.email}
                     </Td>
-                    <Td className="text-blue-400 underline">
+                    <Td className="text-blue-400 underline" >
                       <Link
                         to={`/admin/user-details/${
                           groupID === "all" || groupID === "Requests"

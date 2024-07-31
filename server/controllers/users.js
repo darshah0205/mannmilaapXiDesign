@@ -128,6 +128,8 @@ const getAllUsers = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
+
+    // email, password, newPassword
     const details = req.body;
     // console.log(details);
     const user = await Client.findOne({ email: details.email });
