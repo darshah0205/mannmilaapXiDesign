@@ -3,9 +3,12 @@ import { getCurrentUserDetails, logOut } from "../../../utils/userDetails";
 import { Card, CardBody, Flex, Box, Stack, Heading, Button, Image, Center,Text,UnorderedList,ListItem, Divider} from '@chakra-ui/react';
 import Image1 from '../../images/Banner.png';
 import AboutusImg from '../../images/design1.png'
-import Image2 from '../../images/MannMilap.png'
+import Image2 from '../../images/MannMilap.png';
+import { useNavigate } from "react-router-dom";
+
 const Landing = () => {
   const [userInfo, setUserInfo] = useState(false);
+  const navigate=useNavigate();
 
   // const getDetails = async () => {
   //   try {
@@ -45,7 +48,7 @@ const Landing = () => {
           </Flex>
         </CardBody>
         {/* <Text fontFamily='serif' textAlign='center' fontSize='xx-large' marginTop='50px' marginBottom="20px">Find Your Perfect Partner Clicks Away</Text> */}
-        <Button variant='solid' colorScheme='orange' w='30%' style={{margin:"auto"}}>Register Now</Button>
+        <Button variant='solid' colorScheme='orange' w='100%' maxWidth="400px" style={{margin:"auto"}} onClick={()=>navigate('/register')}>Register Now</Button>
       </Card>
       <Card marginTop='20px' padding='10px' variant='unstyle'>
            <Text fontWeight='500' fontSize='xxx-large' textAlign='center' fontFamily='cursive'>About Us</Text>
