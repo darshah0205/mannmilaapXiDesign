@@ -147,9 +147,15 @@ const Landing = () => {
            </Flex>
 
            <Card marginTop='20px' padding='10px' variant='unstyle'>
-           <Text fontWeight='500' fontSize='xxx-large' textAlign='center' fontFamily='cursive'>About Us</Text>
+           <Text fontWeight='500' fontSize='xxx-large' textAlign='center' fontFamily='cursive'>Contact Us</Text>
            <div style={{backgroundColor:'grey',borderRadius:'100%',width:'20%',height:'2px',margin:"auto"}}></div>
-           <Flex justifyContent='center' alignItems='center' variant='unstyle' ></Flex>
+           <Flex justifyContent='center' alignItems='center' variant='unstyle' flexDirection="column">
+               
+               <Button colorScheme="orange" marginTop='10px'><Text fontSize='x-large' fontFamily='serif' marginTop='5px'>Nisha Shah - +91 9821123191</Text></Button>
+               <Button colorScheme="orange" marginTop='10px'><Text fontSize='x-large' fontFamily='serif' marginTop='5px'>Parthiv Shah - +91 9137240341</Text></Button>
+               <Button colorScheme="orange" marginTop='10px'><Text fontSize='x-large' fontFamily='serif' marginTop='5px'>mannmilap.official@gmail.com</Text></Button>
+
+           </Flex>
       </Card>
 
       </Card>
