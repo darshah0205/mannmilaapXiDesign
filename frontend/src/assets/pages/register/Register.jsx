@@ -7,8 +7,9 @@ import {
   Checkbox,
   CheckboxGroup,
   Stack,
-} from "@chakra-ui/react";
-import {
+  useToast,
+  FormControl,
+  FormLabel,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -17,12 +18,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-
-import { FormControl, FormLabel } from "@chakra-ui/react";
-
 import axios from "axios";
-
-import { useToast } from "@chakra-ui/react";
 
 const Register = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -100,9 +96,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Clicked handleSubmit");
     if (!biodata) return;
-    // console.log("Clicked handleSubmit2");
 
     const formData = new FormData();
     formData.append("file", biodata);
@@ -122,7 +116,6 @@ const Register = () => {
     groups.forEach((group, index) => {
       formData.append(`groupRequest[${index}]`, group);
     });
-    // console.log("Clicked handleSubmit3");
 
     try {
       const response = await axios.post(
@@ -136,6 +129,7 @@ const Register = () => {
         }
       );
       console.log(response.data);
+      window.location.href("/")
       toast({
         title: "Registration Successful.",
         description: "You will get notified when the request is approved",
@@ -177,11 +171,17 @@ const Register = () => {
     {
       label1: "Birthdate",
       value1: birthdate,
-      onChange1: (e) => setBirthdate(e.target.value),
-      label2: "Gender",
-      value2: gender,
-      onChange2: (e) => setGender(e.target.value),
-      two_labels: "Yes",
+      onChange1: (e) => setBirthdate(e.target.value)
+    },
+    {
+      label1: "Gender",
+      value1: gender,
+      onChange1: (e) => setGender(e.target.value),
+      isSelectInput: true, // Add a flag to indicate this step contains a select input
+      selectOptions: [
+        { value: "Male", label: "Male" },
+        { value: "Female", label: "Female" },
+      ],
     },
     {
       label1: "Father Name",
@@ -266,7 +266,6 @@ const Register = () => {
     axios
       .post("/api/registration", registrationData)
       .then((response) => {
-        // console.log('Registration successful:', response.data);
         toast({
           title: "Registration Successful.",
           description: "You will get notified when the request is approved",
@@ -279,7 +278,7 @@ const Register = () => {
         console.error("There was an error registering:", error);
         toast({
           title: "Something Went wrong",
-          description: "Please the input data or try again",
+          description: "Please check the input data or try again",
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -290,9 +289,9 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-[calc(100vh-70px)]">
+    <div>
       <Button colorScheme="orange" onClick={onOpen}>
-        Fill Up Registeration Form
+        Register
       </Button>
 
       <Modal
@@ -315,8 +314,20 @@ const Register = () => {
                   {steps[activeStep].isFileInput ? (
                     <Input
                       type="file"
-                      onChange={steps[activeStep].onChange1} // Use onChange2 to handle file input
+                      onChange={steps[activeStep].onChange1} // Use onChange1 to handle file input
                     />
+                  ) : steps[activeStep].isSelectInput ? (
+                    <Select
+                      value={steps[activeStep].value2}
+                      onChange={steps[activeStep].onChange2}
+                      placeholder="Select Gender"
+                    >
+                      {steps[activeStep].selectOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </Select>
                   ) : (
                     <Input
                       value={steps[activeStep].value1}
@@ -328,7 +339,7 @@ const Register = () => {
                 </FormControl>
 
                 {steps[activeStep].two_labels &&
-                  !steps[activeStep].isFileInput && (
+                  !steps[activeStep].isFileInput && !steps[activeStep].isSelectInput && (
                     <FormControl mt={4}>
                       <FormLabel>{steps[activeStep].label2}</FormLabel>
                       <Input
