@@ -129,7 +129,7 @@ const Register = () => {
         }
       );
       console.log(response.data);
-      window.location.href("/")
+      window.location.href = "/";
       toast({
         title: "Registration Successful.",
         description: "You will get notified when the request is approved",
@@ -171,7 +171,7 @@ const Register = () => {
     {
       label1: "Birthdate",
       value1: birthdate,
-      onChange1: (e) => setBirthdate(e.target.value)
+      onChange1: (e) => setBirthdate(e.target.value),
     },
     {
       label1: "Gender",
@@ -318,8 +318,8 @@ const Register = () => {
                     />
                   ) : steps[activeStep].isSelectInput ? (
                     <Select
-                      value={steps[activeStep].value2}
-                      onChange={steps[activeStep].onChange2}
+                      value={steps[activeStep].value1}
+                      onChange={steps[activeStep].onChange1}
                       placeholder="Select Gender"
                     >
                       {steps[activeStep].selectOptions.map((option) => (
@@ -339,7 +339,8 @@ const Register = () => {
                 </FormControl>
 
                 {steps[activeStep].two_labels &&
-                  !steps[activeStep].isFileInput && !steps[activeStep].isSelectInput && (
+                  !steps[activeStep].isFileInput &&
+                  !steps[activeStep].isSelectInput && (
                     <FormControl mt={4}>
                       <FormLabel>{steps[activeStep].label2}</FormLabel>
                       <Input
