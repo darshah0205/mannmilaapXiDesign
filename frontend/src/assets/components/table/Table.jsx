@@ -35,7 +35,7 @@ const TableContent = ({ members, groupID }) => {
                 // console.log(member)
                 const groupMembership =member.groupsExpiry?.length
                 const expiryDate = new Date(member.expiry);
-                console.log(expiryDate) // Convert expiry to Date object
+                // console.log(expiryDate) // Convert expiry to Date object
                 const daysUntilExpiry = Math.floor(
                   (expiryDate - today) / (1000 * 60 * 60 * 24)
                 ); // Calculate days until expiry

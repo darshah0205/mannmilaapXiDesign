@@ -40,7 +40,7 @@ const Register = () => {
   const [groups, setGroups] = useState([]);
   const [caste, setCaste] = useState("");
   const [address, setAddress] = useState("");
-  const [biodata, setBiodata] = useState(null);
+  const [biodata, setBiodata] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [file, setFile] = useState(false);
 

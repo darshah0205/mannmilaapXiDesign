@@ -7,7 +7,7 @@ const AdminSidebar = () => {
   const [groups, setGroups] = useState(false);
   const getGroups = async () => {
     const groups = await getAllGroups();
-    console.log(groups);
+    // console.log(groups);
     setGroups(groups.data.data);
   };
   useEffect(() => {

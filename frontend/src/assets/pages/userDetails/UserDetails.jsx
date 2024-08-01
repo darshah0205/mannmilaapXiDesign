@@ -22,7 +22,7 @@ export const UserDetails = () => {
   const fetchUserData = async () => {
     try {
       const response = await getOneUserDetails(userID); // Replace with your actual data fetching function
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setUser(response.data.data[0]);
     } catch (error) {
       console.error("Error fetching user data:", error);

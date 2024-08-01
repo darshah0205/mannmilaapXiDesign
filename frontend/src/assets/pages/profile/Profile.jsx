@@ -68,7 +68,7 @@ const Profile = () => {
 
   const handleSubmit = async () => {
     // Handle form submission, e.g., send data to server
-    console.log("Updated user details:", user);
+    // console.log("Updated user details:", user);
     await updateUserProfile(user);
     setEditIsOn(false);
   };
